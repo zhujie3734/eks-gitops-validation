@@ -1,0 +1,16 @@
+# Supply the real hostname and existing external database secret before bootstrap.
+frontend:
+  replicas: 2
+backend:
+  replicas: 2
+database:
+  enabled: false
+  host: REPLACE_WITH_RDS_ENDPOINT
+  existingSecret: example-database
+ingress:
+  className: alb
+  host: REPLACE_WITH_APP_DOMAIN
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /

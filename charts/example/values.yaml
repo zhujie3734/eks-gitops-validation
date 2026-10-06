@@ -1,0 +1,26 @@
+frontend:
+  image: localhost:5001/gitops-lab/frontend
+  tag: bootstrap
+  replicas: 1
+backend:
+  image: localhost:5001/gitops-lab/backend
+  tag: bootstrap
+  replicas: 1
+imagePullSecrets: []
+database:
+  enabled: true
+  host: pg-service
+  name: postgres
+  username: postgres
+  existingSecret: example-database
+  image: postgres:17-alpine
+  persistence:
+    enabled: false
+    size: 5Gi
+    storageClass: ""
+ingress:
+  enabled: true
+  className: nginx
+  host: gitops.local
+  annotations: {}
+  tls: []

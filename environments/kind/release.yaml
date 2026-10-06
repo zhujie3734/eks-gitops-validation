@@ -1,0 +1,6 @@
+frontend:
+  image: localhost:5001/gitops-lab/frontend
+  tag: bootstrap
+backend:
+  image: localhost:5001/gitops-lab/backend
+  tag: bootstrap

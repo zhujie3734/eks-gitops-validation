@@ -1,0 +1,19 @@
+name: Validate manifests
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: azure/setup-helm@v4.3.1
+        with:
+          version: v3.19.0
+      - run: bash scripts/validate.sh
+      - name: Kubernetes schema validation
+        run: |
+          docker run --rm -v "$PWD/.state:/manifests:ro" ghcr.io/yannh/kubeconform:v0.7.0 -strict -summary /manifests/rendered-kind.yaml /manifests/rendered-eks.yaml

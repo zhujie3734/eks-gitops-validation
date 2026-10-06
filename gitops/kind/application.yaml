@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: example-kind
+  namespace: argocd
+spec:
+  project: lab
+  source:
+    repoURL: http://lab-git.argocd.svc.cluster.local/repo.git
+    targetRevision: main
+    path: charts/example
+    helm:
+      valueFiles:
+        - ../../environments/kind/values.yaml
+        - ../../environments/kind/release.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitops-lab
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5
+      backoff: {duration: 5s, factor: 2, maxDuration: 1m}

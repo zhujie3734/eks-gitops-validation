@@ -1,0 +1,7 @@
+# Runtime topology, separate from the image release file.
+ingress:
+  host: gitops.local
+  className: nginx
+database:
+  persistence:
+    enabled: false

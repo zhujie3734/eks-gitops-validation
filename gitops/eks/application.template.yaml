@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: example-eks
+  namespace: argocd
+spec:
+  project: applications
+  source:
+    repoURL: REPLACE_WITH_GITHUB_REPO_URL
+    targetRevision: main
+    path: charts/example
+    helm:
+      valueFiles:
+        - ../../environments/eks/values.yaml
+        - ../../environments/eks/release.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitops-example
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5

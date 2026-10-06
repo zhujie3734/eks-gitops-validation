@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels: {app: backend}
+  template:
+    metadata:
+      labels: {app: backend}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: backend
+          image: "{{ .Values.backend.image }}:{{ .Values.backend.tag }}"
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 5000}]
+          env:
+            - {name: DATABASE_URI, value: {{ .Values.database.host | quote }}}
+            - {name: DATABASE_NAME, value: {{ .Values.database.name | quote }}}
+            - {name: DATABASE_USERNAME, value: {{ .Values.database.username | quote }}}
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef: {name: {{ .Values.database.existingSecret }}, key: password}
+          startupProbe:
+            httpGet: {path: /healthy, port: 5000}
+            failureThreshold: 30
+            periodSeconds: 5
+          readinessProbe:
+            httpGet: {path: /ready, port: 5000}
+          livenessProbe:
+            httpGet: {path: /healthy, port: 5000}
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 500m, memory: 256Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  type: ClusterIP
+  selector: {app: backend}
+  ports: [{port: 5000, targetPort: 5000}]

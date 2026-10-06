@@ -1,0 +1,13 @@
+Verified 2026-10-06 on Windows + Ubuntu 26.04.1 LTS / WSL2.
+Cluster: windows-lab, Kubernetes v1.35.0
+windows-lab-control-plane Ready
+windows-lab-worker Ready
+windows-lab-worker2 Ready
+kubectl get pods -A: all 17 pods Running, 1/1 Ready, zero restarts at verification.
+NGINX Ingress Controller 5.6.3, Helm chart 2.7.3: deployed
+Metrics Server 0.9.0, Helm chart 3.14.0: deployed
+kubectl top nodes: metrics returned for all 3 nodes.
+test namespace: nginx Deployment 2/2 Ready, ClusterIP Service, nginx Ingress.
+HTTP GET 127.0.0.1:8080 with Host nginx.local from WSL: passed, Welcome to nginx!
+HTTP GET 127.0.0.1:8080 with Host nginx.local from Windows curl.exe: passed.
+WSL keepalive process is running; creation script includes keepalive startup.

@@ -1,0 +1,9 @@
+controller:
+  nginxplus: false
+  service:
+    type: NodePort
+    externalTrafficPolicy: Cluster
+    httpPort:
+      nodePort: 30080
+  ingressClass:
+    name: nginx

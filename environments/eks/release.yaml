@@ -1,0 +1,7 @@
+# Promote tested GHCR/ECR images here; never use the kind localhost registry on EKS.
+frontend:
+  image: REPLACE_WITH_REGISTRY/frontend
+  tag: REPLACE_WITH_TESTED_SHA
+backend:
+  image: REPLACE_WITH_REGISTRY/backend
+  tag: REPLACE_WITH_TESTED_SHA

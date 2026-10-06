@@ -1,0 +1,11 @@
+.state/
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.env
+*.tfstate*
+kubeconfig*
+*.pem
+*.key
+wsl-keeper.pid
