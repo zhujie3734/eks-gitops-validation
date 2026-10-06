@@ -3,8 +3,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: example
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
   {{- with .Values.ingress.annotations }}
-  annotations: {{ toYaml . | nindent 4 }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}

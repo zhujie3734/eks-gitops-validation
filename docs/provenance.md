@@ -9,7 +9,7 @@
 
 旧代码引用 lyzhang1999 的仓库/镜像，gitops 也显示 fork 来源；保留来源说明。
 
-更新 Python 3.8/Node 16 为 Python 3.12/Node 22；React 开发服务器改为 Vite + nginx；修复 SQLAlchemy 重复初始化；密码通过 Secret；前端代理 /api 避免不同 Ingress rewrite 注解差异；未迁入弃用的 HPA API、重复 CD 工具和无关示例。
+更新 Python 3.8/Node 16 为 Python 3.12/Node 22；React 开发服务器改为 esbuild + nginx；修复 SQLAlchemy 重复初始化；密码通过 Secret；前端代理 /api 避免不同 Ingress rewrite 注解差异；未迁入弃用的 HPA API、重复 CD 工具和无关示例。
 
 镜像更新采用 Git release 提交/PR，替代旧 Image Updater 的 latest 注解。kind/EKS 独立 release，防止本地 registry 地址进入 EKS。
 
