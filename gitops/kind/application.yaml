@@ -6,7 +6,7 @@ metadata:
 spec:
   project: lab
   source:
-    repoURL: http://lab-git.argocd.svc.cluster.local/repo.git
+    repoURL: git://lab-git.argocd.svc.cluster.local/repo.git
     targetRevision: main
     path: charts/example
     helm:
