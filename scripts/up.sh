@@ -24,8 +24,8 @@ if ! kubectl -n "$NAMESPACE" get secret example-database >/dev/null 2>&1; then
 fi
 bash scripts/registry.sh
 bash scripts/local-git.sh
+kubectl apply -f gitops/kind/project.yaml -f gitops/kind/application.yaml
 bash scripts/build.sh
 bash scripts/release.sh
-kubectl apply -f gitops/kind/project.yaml -f gitops/kind/application.yaml
 wait_app "$(gitlab rev-parse HEAD)"
 bash scripts/verify.sh
