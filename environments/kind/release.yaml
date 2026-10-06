@@ -1,6 +1,6 @@
 frontend:
   image: localhost:5001/gitops-lab/frontend
-  tag: bootstrap
+  tag: "091e8e13d444"
 backend:
   image: localhost:5001/gitops-lab/backend
-  tag: bootstrap
+  tag: "091e8e13d444"
