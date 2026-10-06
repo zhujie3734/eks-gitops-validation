@@ -1,6 +1,6 @@
 frontend:
   image: localhost:5001/gitops-lab/frontend
-  tag: "test-20261006131535"
+  tag: "cffa51a5200b"
 backend:
   image: localhost:5001/gitops-lab/backend
-  tag: "test-20261006131535"
+  tag: "cffa51a5200b"
