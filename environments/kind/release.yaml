@@ -1,6 +1,6 @@
 frontend:
-  image: localhost:5001/gitops-lab/frontend
-  tag: "4deeb477b759"
+  image: ghcr.io/zhujie3734/eks-gitops-validation/frontend
+  tag: "171c8cdeb25a220569c932a7c4d9a22e2836214c"
 backend:
-  image: localhost:5001/gitops-lab/backend
-  tag: "4deeb477b759"
+  image: ghcr.io/zhujie3734/eks-gitops-validation/backend
+  tag: "171c8cdeb25a220569c932a7c4d9a22e2836214c"
