@@ -1,0 +1,28 @@
+name: Propose EKS promotion
+on:
+  workflow_dispatch:
+    inputs:
+      tested_tag:
+        description: Image tag already validated on kind
+        required: true
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - name: Promote the same images without rebuilding
+        env:
+          REPOSITORY: ${{ github.repository }}
+          TESTED_TAG: ${{ inputs.tested_tag }}
+        run: python3 scripts/set-release.py eks "ghcr.io/${REPOSITORY,,}" "$TESTED_TAG"
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: release/eks-images
+          commit-message: 'deploy(eks): promote tested images'
+          title: 'deploy(eks): promote tested images'
+          body: 'Promotes the supplied tested tag to EKS without rebuilding. Confirm the local validation record and EKS prerequisites before merging.'

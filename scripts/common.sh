@@ -10,6 +10,18 @@ CLUSTER=windows-lab
 APP=example-kind
 NAMESPACE=gitops-lab
 gitlab() { git -c safe.directory="$ROOT" "$@"; }
+http() {
+  curl -fsS --connect-timeout 3 --max-time 5 --retry 20 --retry-delay 2 --retry-all-errors --retry-max-time 120 -H 'Host: gitops.local' "http://127.0.0.1:8080$1"
+}
+wait_version() {
+  local version=$1
+  for attempt in {1..40}; do
+    if curl -fsS --connect-timeout 3 --max-time 5 -H 'Host: gitops.local' http://127.0.0.1:8080/api/healthy |
+      python3 -c 'import json,sys; assert json.load(sys.stdin)["version"]==sys.argv[1]' "$version" 2>/dev/null; then return; fi
+    sleep 2
+  done
+  echo "HTTP did not converge to $version" >&2; return 1
+}
 local_context() {
   kind export kubeconfig --name "$CLUSTER" --kubeconfig "$KUBECONFIG" >/dev/null
   [[ $(kubectl config current-context) == "kind-$CLUSTER" ]] || { echo 'Wrong cluster'; exit 1; }
