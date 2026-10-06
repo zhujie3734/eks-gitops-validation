@@ -17,7 +17,7 @@ function App() {
   async function act(fn) { try { setError(''); await fn(); } catch(e) { setError(e.message); } }
   useEffect(() => { act(refresh); }, []);
   return <div className="App">
-    <header className="App-header">GitOps Lab · {import.meta.env.VITE_APP_VERSION || 'dev'}</header>
+    <header className="App-header">GitOps Lab · {__APP_VERSION__}</header>
     <p>Build → Git commit → Argo CD → Kubernetes</p>
     <input aria-label="Text" maxLength={120} value={input} onChange={e => setInput(e.target.value)}/>
     <button onClick={() => act(async () => { await api('add', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({text:input})}); setInput(''); await refresh(); })}>Add</button>
